@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+// void bubblesort(int *a,int n){
+    
+//     //base case
+//     if(n==1){
+//         return;
+//     }
+    
+//     //sort 1 element and call for rest array
+//     for(int i=0;i<=n-2;i++){
+//         if(a[i]>a[i+1]){
+//             swap(a[i],a[i+1]);
+//         }
+//     }
+//     bubblesort(a,n-1);
+// }
+
+void bubblesort(int a[],int j,int n){
+    if(n==1){
+        return;
+    }
+    
+    if(j==n-1){
+        return bubblesort(a,0,n-1);
+    }
+    
+    //base case
+    if(a[j]>a[j+1]){
+        swap(a[j],a[j+1]);
+    }
+    
+    bubblesort(a,j+1,n);
+    return;
+}
+int main() {
+    int a[]={2,4,1,6,8};
+    int n=5;
+    
+    bubblesort(a,0,n);
+    
+    for(int j=0;j<n;j++){
+        cout<<a[j]<<" ";
+    }
+    return 0;
+}

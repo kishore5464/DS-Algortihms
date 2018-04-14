@@ -1,0 +1,95 @@
+#include <iostream>
+using namespace std;
+class node{
+    public:
+    int data;
+    node *next;
+    
+    node(int d){
+        data=d;
+        next=NULL;
+    }
+};
+
+void insertAtEnd(node *&head,int data){
+    if(head==NULL){
+        head=new node(data);
+		return;
+    }
+    
+    node *tail=head;
+    while(tail->next!=NULL){
+        tail=tail->next;
+    }
+    
+    node *n=new node(data);
+    n->next=NULL;
+    tail->next=n;
+     return;   
+}
+
+void buildNodes(node *&head){
+    int data;
+    cin>>data;
+    
+    while(data!=-1){
+        insertAtEnd(head,data);
+        cin>>data;
+    }
+    
+}
+
+void reverseIterative(node *&head){
+    node *c=head;
+    node *p=NULL;
+    node *n;
+    
+    while(c!=NULL){
+        //save the next node
+        n=c->next;
+        
+        //also current node points to NULL
+        c->next=p;
+        
+        //updating the pointers
+        p=c;
+        c=n;
+    }
+    head=p;
+}
+
+node *reverseRecursive(node *&head){
+    
+    //single node or no node
+    if(head->next==NULL || head==NULL){
+        return head;
+    }
+    
+    node *smallhead=reverseRecursive(head->next);
+    node *c=head;
+    c->next->next=c;
+    c->next=NULL;
+    return smallhead;
+}
+void print(node *head){           
+    node *temp=head;
+    
+    while(temp!=NULL){
+        cout<<temp->data<<" -> ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+
+
+int main() {
+    node *head=NULL;
+    buildNodes(head);
+    print(head);
+    
+  //  reverseIterative(head);
+    head=reverseRecursive(head);
+    print(head);
+    return 0;
+}
+

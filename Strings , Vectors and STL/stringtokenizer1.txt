@@ -1,0 +1,20 @@
+#include <iostream>
+#include<cstring>
+using namespace std;
+int main() {
+    
+    char str[]="Hi, I am Komal";
+    
+    char *ptr;
+    ptr=strtok(str," ,");      //separated by space and comma
+    //  cout<<ptr<<endl;
+  
+    while(ptr!=NULL){
+       cout<<ptr<<endl;
+       
+       //NULL signifies -extract characters from original string
+       ptr=strtok(NULL," ,");             //subsequent call
+    }
+     
+   
+}

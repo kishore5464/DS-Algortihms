@@ -1,0 +1,22 @@
+#include <iostream>
+#include<cstring>
+using namespace std;
+int main() {
+    
+    string s[10]={"Apple","Mango","Orange","Papaya","Guava"};
+    
+    string s2;
+    getline(cin,s2);
+    
+    int i;
+    for(i=0;i<5;i++){
+        if(s2==s[i]){
+            cout<<"Found at index "<<i<<endl;
+            break;
+        }
+    }
+    
+    if(i==5){
+        cout<<"Not found !!";
+    }
+}

@@ -1,0 +1,128 @@
+#include <iostream>
+using namespace std;
+class node{
+    public:
+    int data;
+    node *next;
+    
+    node(int d){
+        data=d;
+        next=NULL;
+    }
+};
+
+void insertAtBeg(node *&head,int data){ //here head is pass by referance because position of head is changing each time
+    node *n=new node(data);
+    n->next=head;
+    head=n;
+}
+
+void print(node *head){           //if we can work on head directly if we want to traverse, just pass it by value so that actual position of head will not change
+    node *temp=head;
+    
+    while(temp!=NULL){
+        cout<<temp->data<<" -> ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+
+int length(node *head){
+    int len=0;
+    
+    while(head!=NULL){
+        head=head->next;
+        len+=1;
+    }
+    return len;
+}
+
+void insertAtTail(node *&head,int data){
+   if(head==NULL){
+       head=new node(data);
+	   return;
+   }    
+   
+       node *tail=head;
+       
+       while(tail->next!=NULL){
+           tail=tail->next;
+       }
+       
+       node *n=new node(data);
+       n->next=NULL;
+       tail->next=n;
+       return;
+}
+
+void insertAtMiddle(node *&head,int p,int data){
+    if(head==NULL||p==0){
+        insertAtBeg(head,data);
+    }
+    else if(p>length(head)){
+        insertAtTail(head,data);
+    }
+    else{
+        int jump=1;
+        node *temp=head;
+        while(jump<=p-1){
+          temp=temp->next; 
+          jump+=1;
+        }
+        
+        node *n=new node(data);
+        n->next=temp->next;
+        temp->next=n;
+    }
+}
+
+bool searchRecursive(node *head,int key){
+    if(head==NULL){
+        return false;
+    }
+    
+    if(head->data==key){
+        return true;
+    }
+    else{
+        return searchRecursive(head->next,key);
+    }
+}
+
+bool searchIterative(node *head,int key){
+    while(head!=NULL){
+        if(head->data==key){
+            return true;
+        }
+        head=head->next;
+    }
+    return false;
+}
+
+int main() {
+    node *head=NULL;
+    
+    insertAtBeg(head,5);
+    insertAtBeg(head,4);
+    insertAtBeg(head,3);
+    print(head);
+    
+    if(searchRecursive(head,7)){
+        cout<<"Element is present";
+    }
+    else{
+        cout<<"Element is not present";
+    }
+    
+    if(searchIterative(head,5)){
+        cout<<"\nElement is present\n";
+    }
+    else{
+        cout<<"Element is not present\n";
+    }
+    
+    insertAtTail(head,6);
+    insertAtMiddle(head,3,9);
+    print(head);
+    return 0;
+}

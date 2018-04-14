@@ -1,0 +1,18 @@
+#include <iostream>
+using namespace std;
+int main() {
+
+  char a[]={'a','b','c','d','e','\0'};
+  cout<<a<<" ";
+  cout<<sizeof(a);
+  
+  cout<<endl;
+  char c[100];
+  cin.getline(c,100);
+  cout<<c;
+  
+  char p[100];
+  cin.getline(p,100,'.');
+  cout<<p;
+  
+}

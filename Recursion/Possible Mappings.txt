@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+void generateString(char *a,int i,char *output,int j){
+    
+    if(a[i]=='\0'){
+        output[j]='\0'; //always putting null in the end of output array
+        cout<<output<<",";
+        return;
+    }
+    
+    //trear current digit
+    int digit=a[i]-'0';
+    char ch=digit+64;                 //convert to alphabet corresponding to digits
+    output[j]=ch;
+    generateString(a,i+1,output,j+1);
+    
+    //treat two digits
+    if(a[i+1]!='\0'){
+        int seconddigit=a[i+1]-'0';
+        int no=digit*10+seconddigit;
+        
+        if(no<=26){
+           char ch=no+64; 
+           output[j]=ch;
+           generateString(a,i+2,output,j+1);
+        }
+        
+    }
+}
+int main() {
+    char input[100];
+    cin>>input;
+    
+    char output[100];
+    generateString(input,0,output,0);
+    return 0;
+}

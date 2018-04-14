@@ -1,0 +1,35 @@
+#include <iostream>
+#include<set>
+using namespace std;
+void permutations(char *input,int i,set<string> &s){          //by reference : bcoz we want changes in original array
+    //Base case
+    if(input[i]=='\0'){
+        
+        //we cant insert input directly bcoz input is of char type while s is object of string type
+        //so make a variable of type string
+        string temp=input;
+        s.insert(temp);                    
+       // cout<<input<<",";
+        return;
+    }
+    
+    //recursive case
+    for(int j=i;input[j]!='\0';j++){
+        swap(input[i],input[j]);
+        permutations(input,i+1,s);
+        swap(input[i],input[j]);
+    }
+}
+
+int main() {
+    char input[100];
+    cin>>input;
+    
+    set<string> s;
+    
+    permutations(input,0,s);
+    
+    for(string final:s){                  //iterating over set
+        cout<<final<<" , ";
+    }
+}

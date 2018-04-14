@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+char keypad[][10]={" ",".+@$","ABC","DEF","GHI","JKL","MNO","PQRS","TUV","WXYZ"};
+void print(char *input,char *output,int i,int j){
+    if(input[i]=='\0'){
+        output[j]='\0';
+        cout<<output<<" ";
+        return;
+    }
+    
+    int digits=input[i]-'0';
+    
+   //  if(digits==0 || digits==1){
+   //     print(input,output,i+1,j);
+   // }
+    
+    for(int k=0;keypad[digits][k]!='\0';k++){
+        output[j]=keypad[digits][k];
+        print(input,output,i+1,j+1);
+    }
+}
+
+int main() {
+    char input[100],output[100];
+    cin>>input;
+    
+    print(input,output,0,0);
+}

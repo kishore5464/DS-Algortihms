@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+int binarySearch(int *a,int key,int start,int end){
+    
+    if(start<=end){
+      int mid=(start+end)/2;
+    
+      if(a[mid]==key){
+        return mid;
+      }
+    
+       if(a[mid]>key){
+          return binarySearch(a,key,start,mid-1);
+       } 
+        else{
+          return binarySearch(a,key,mid+1,end);
+        }    
+     }
+     
+     return -1;
+}
+
+int main() {
+    int n,key;
+    cin>>n;
+    int a[n];
+    
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    
+    cin>>key;
+    
+    cout<<binarySearch(a,key,0,n-1);
+    return 0;
+}

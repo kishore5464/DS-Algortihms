@@ -1,0 +1,86 @@
+#include <iostream>
+#include<cstring>
+using namespace std;
+class car{
+    private:
+     int price;
+    public:
+     char *name;
+     
+     car(){
+         
+     }
+     
+     //nm is pointer to the string(which is actually in the heap memory) and and we store the pointer in the object not the value
+     //now we store the string(eg-"BMW" into the new array ,then store the starting address of this new array into the object
+     car(int p,char *nm){
+         price=p;
+         int l=strlen(nm);           //getting length 
+         name=new char[l+1];         //creating a variable length array of size l+1 (1 is for null character)
+         strcpy(name,nm);            //copying values in new array
+     }
+     
+     //overriding copy constructor to create deep copy
+     car(car &x){
+        price=x.price;
+        int l=strlen(x.name);           //getting length 
+        name=new char[l+1];         //creating a variable length array of size l+1 (1 is for null character)
+        strcpy(name,x.name);        //copying the values into new array and address of this array is stored
+     }
+      
+    int getprice(){
+         return price;
+     }
+     
+     void setPrice(int p){
+         if(p>0){
+             price=p;
+         }
+         else{
+             price=0;
+         }
+     }
+     
+     void setName(char *nm){
+         if(name==NULL){                  //if name memory is free
+            int l=strlen(nm);
+            name=new char[l+1];
+            strcpy(name,nm);
+         }
+         else{
+             //free up the memory and then update
+         }
+     }
+     
+     char* getName(){
+         return name;
+     }
+};
+
+int main() {
+    car c;
+    c.setPrice(1000);
+    cout<<c.getprice()<<" ";
+    
+    c.setName("Nano");
+    cout<<c.getName()<<endl<<endl;
+    
+    car d(1001,"BMW");
+    cout<<d.getprice()<<" ";
+    cout<<d.getName()<<endl;
+    
+    car e(d);
+    cout<<e.getprice()<<" "<<e.getName()<<endl;
+    
+    //SHALLOW COPY  (created by default copy constructor)
+    
+    //when we copy object here , all data members get copied including pointer to the name(i.e. address) 
+    //so after copying both the objects start pointng to same address (where name is stored)
+    //that is why ,when value changed by a object reflected in another object
+    e.name[0]='G';
+    d.name[0]='H';
+    cout<<d.getName()<<" "<<e.getName()<<endl;              //GMW GMW
+    
+    //so create your own copy constructor
+}
+

@@ -1,0 +1,44 @@
+#include<iostream>
+using namespace std;
+
+int findminimum(int *a,int j,int n,int minimum,int pos){
+    if(j==n){
+       return pos;    
+    }
+    
+    if(a[j]<minimum){
+        minimum=a[j];
+        pos=j;
+    }
+    return findminimum(a,j+1,n,minimum,pos);
+}
+
+void selecsort(int *a,int i,int n){
+    
+    if(i==n){
+        return;
+    }
+    
+    int min=a[i];
+    int mini=findminimum(a,i+1,n,min,i);
+    if(a[i]>a[mini]){
+        swap(a[i],a[mini]);
+    }
+    selecsort(a,i+1,n);
+}
+
+int main() {
+    int n;
+    cin>>n;
+    int a[n];
+    
+    for(int i=0;i<n;i++){
+      cin>>a[i];    
+    }
+    selecsort(a,0,n);
+    
+    for(int i=0;i<n;i++){
+        cout<<a[i]<<" ";
+    }
+	return 0;
+}

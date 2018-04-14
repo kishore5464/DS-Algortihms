@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+
+int main() {
+    
+    int n;
+    cin>>n;
+    
+    while(n--){
+    //    int a[100]; //here space compl is o(1) bcoz static number size
+    //   int a[n];  //here o(n)
+         int *a=new int[n]; //here space comp is o(n^2)
+          
+      //  cout<< &a <<endl;
+	      cout<< a <<endl;
+    }
+    
+    return 0;
+}

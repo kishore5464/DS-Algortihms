@@ -1,0 +1,34 @@
+#include <iostream>
+#include<cstring>
+using namespace std;
+class car{
+   // private :
+   public:
+     int price;
+    
+      char name[20];
+      
+      car(int p, char *nm){
+          price=p;
+          strcpy(name,nm);
+      }
+      
+      car(car &x){
+          price=x.price;
+          strcpy(name,x.name);
+      }
+      void print(){
+          cout<<name<<" "<<price<<endl;
+      }
+};
+
+int main() {
+ car c(1001,"BMW");
+ 
+ c.print();
+ car d(c);
+ d.print();
+ c.price=1002;
+  c.print();
+  d.print();
+}

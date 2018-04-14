@@ -1,0 +1,39 @@
+#include <iostream>
+#include<algorithm>
+#include<ctime>
+using namespace std;
+
+int a[10000000];
+
+void bubblesort(int *a,int n){
+    
+    for(int i=0;i<n-1;i++){
+        for(int j=0;j<=n-i-2;j++){
+            if(a[j]>a[j+1]){
+                swap(a[i],a[j]);
+            }
+        }
+    }
+}
+int main() {
+    int n;
+    cin>>n;
+    
+    for(int i=0;i<n;i++){
+        a[i]=n-i;
+    }
+    
+    //inbuild sort function with headerfile - algorithm
+    clock_t start=clock();
+    //sort(a,a+n);            //merge sort
+    
+    bubblesort(a,n);
+    clock_t end=clock();
+    
+    cout<<(end-start);
+
+    // for(int i=0;i<n;i++){
+    //     cout<<a[i]<<" ";
+    // }
+    return 0;
+}

@@ -1,0 +1,62 @@
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+char *mystrtok(char str[],char delim){
+    
+    static char *input=NULL;
+    
+    if(str!=NULL){
+        input=str;
+    }
+    
+    if(input==NULL){
+        return NULL;
+    }
+    
+    char *output=new char[strlen(input)+1];  // +1 is for '\0'
+    
+    //return a word as a dynamically allocated word array from my function
+    //read the word form input and store it in output and just return the word till delimeter
+    int i;
+    for(i=0;input[i]!='\0';i++){
+        if(input[i]!=delim){
+            //copy the character in the output array
+            output[i]=input[i];
+        }
+        else{
+            //you are now at delimeter
+            //dont copy delimeter to output array , just add '\0' to close this array
+            output[i]='\0';
+            input=input+i+1; //points to next position;
+            return output;
+        }
+    }
+    
+    //return the last word even if delimeter is not there
+    output[i]='\0';
+    input=NULL;                   //after finishing whole string ,input pointer read NULL
+    return output;
+}
+
+int main() {
+    
+    char str[]="Hi, I am, Komal";
+    char *ptr;
+    
+//     ptr=mystrtok(str,' '); //function knows where to start the next token     
+//     cout<<ptr<<endl;8
+  
+//     ptr=mystrtok(NULL,' ');      
+//     cout<<ptr<<endl;  
+    
+//     ptr=mystrtok(NULL,' ');  
+//     cout<<ptr<<endl;
+    
+     ptr=mystrtok(str,',');      
+     while(ptr!=NULL){
+           cout<<ptr<<endl;
+           ptr=mystrtok(NULL,',');
+       }
+}
+

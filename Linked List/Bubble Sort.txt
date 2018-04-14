@@ -1,0 +1,86 @@
+#include <iostream>
+#include<algorithm>
+using namespace std;
+class node{
+    public:
+    int data;
+    node *next;
+    
+    node(int d){
+        data=d;
+        next=NULL;
+    }
+};
+
+void insertAtEnd(node *&head,int data){
+    if(head==NULL){
+        head=new node(data);
+		return;
+    }
+    
+    node *tail=head;
+    while(tail->next!=NULL){
+        tail=tail->next;
+    }
+    
+    node *n=new node(data);
+    n->next=NULL;
+    tail->next=n;
+     return;   
+}
+
+void buildNodes(node *&head,int n){
+    int data;
+
+    while(n!=0){
+        cin>>data;
+        insertAtEnd(head,data);
+        n--;
+    }
+}
+
+void print(node *head){           
+    node *temp=head;
+    
+    while(temp!=NULL){
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+
+void sorting(node *head,int n){
+    if(head==NULL || n==0){
+        return;
+    }
+    
+    int i=0;
+    node *p;
+    node *q;
+    while(i<=n){
+      int j=0;
+       p=head;
+       q=head->next;
+       while(j<n-i){
+           if(p->data > q->data){
+               swap(p->data,q->data);
+           }
+           p=p->next;
+           q=q->next;
+           j++;
+       } 
+       i++;
+    }
+}
+
+int main() {
+    node *head=NULL;
+    int n;
+    cin>>n;
+    
+    buildNodes(head,n);
+    sorting(head,n-1);
+    print(head);
+    
+    return 0;
+}

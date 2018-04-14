@@ -1,0 +1,67 @@
+#include <iostream>
+using namespace std;
+#define ll long long int
+
+bool isvalid(ll books[],ll n,ll k,ll ans){
+    //mid will be the current ans
+    int students=1;
+    
+    ll current_pages=0;
+    
+    for(int i=0;i<n;i++){
+        if(current_pages+books[i]>ans){
+            current_pages=books[i];
+            students++;
+            if(students>k){
+                return false;
+            }
+        }
+        else{
+            current_pages+=books[i];     //if student can read more pages
+        }
+    }
+    return true;
+}
+
+ll binarysearch(ll books[],ll n,ll k){
+    
+   ll total_pages=0;
+   ll s=0,e=0;
+   
+   for(int i=0;i<n;i++){
+       total_pages+=books[i];
+     //  s=max(s,books[i]);              //size of last book because atleast 1 student has book having pages equal to book with max pages
+   }
+   s=books[n-1];
+   e=total_pages;
+   int finalAns=0;
+   
+   while(s<=e){
+       ll mid=(s+e)/2;
+       
+       if(isvalid(books,n,k,mid)){
+           //true (for left part)
+           finalAns=mid;
+           e=mid-1;
+       }
+       else{
+           s=mid+1;
+       }
+   }
+   return finalAns;
+    
+}
+int main() {
+    ll k;                //for students
+    ll n;                //number of students
+    
+    ll books[100005];
+    
+    cin>>n>>k;
+    
+    for(int i=0;i<n;i++){
+        cin>>books[i];
+    }
+    
+    cout<<binarysearch(books,n,k)<<endl;
+}

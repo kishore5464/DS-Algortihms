@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+bool isSafe(int board[][10],int i,int j,int n){
+    //check for column
+    for(int row=0;row<i;row++){ 
+        if(board[row][j]==1){   //means queen is there in that column
+            return false;
+        }
+    }
+    
+    //check for left diagonal
+    int x=i;  //starting or current coordinates
+    int y=j;
+    
+    while(x>=0 &&y>=0){
+        if(board[x][y]==1){
+            return false;
+        }
+        x--;        //to go to its prv or original position
+        y--;
+    }
+    
+    //check for right diagonal
+    x=i;  //starting or current coordinates
+    y=j;
+    
+    while(x>=0 &&y<n){
+        if(board[x][y]==1){
+            return false;
+        }
+        x--;        //to go to its prv or original position
+        y++;
+    }
+    
+    //position is now safe (all cols and diagonals)
+    return true;
+}
+bool solveNQueen(int board[][10],int i,int n){
+    //base 
+    if(i==n){
+        //you have successfully place queens in a row
+        //print board
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(board[i][j]==1){
+                    cout<<"Q ";
+                }
+                else{
+                    cout<<"_ ";
+                }
+            }
+            cout<<endl;
+        }
+    
+      cout <<endl<<endl;
+       // return true;
+       return false;
+    }
+    
+    //recursive
+    //try to place the queen in the current row and call on the remaining part which will be solved by recursion
+    for(int j=0;j<n;j++){ //iterate over column
+     //check if i,jth position is safe to place queen or not
+     
+     if(isSafe(board,i,j,n)){
+         //place the queen assuming i,j is right position
+         board[i][j]=1;
+         bool nextqueen=solveNQueen(board,i+1,n); //passing next row
+         if(nextqueen){
+             return true;
+         }
+         //means i,j is not right position
+         board[i][j]=0;  //backtrack;
+      }
+    }
+    
+    //you have tried for all position in the current row but couldn't place queen in current row
+    return false;
+}
+
+int main() {
+    int n;
+    cin>>n;
+    int board[10][10]={0};
+    solveNQueen(board,0,n);   //i=0 is row
+    return 0;
+}

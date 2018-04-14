@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+// int power(int a,int b){
+  
+//   if(b==0){
+//       return 1;
+//   }
+  
+//  else{
+//       return a*power(a,b-1);
+//  }
+// }
+
+//OPTIMIZED METHOD
+
+int power(int a,int b){
+    if(b==0){
+        return 1;
+    }
+    
+    int ans= power(a,b/2);
+    ans=ans*ans;            //squaring
+    
+    if(b&1){                //if raise to the power is odd
+       return a*ans;
+    }
+    return ans;
+}
+int main() {
+    int a,b;
+    cin>>a>>b;
+    
+    cout<<power(a,b);
+    return 0;
+}

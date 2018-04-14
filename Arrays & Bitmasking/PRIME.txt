@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+void prime(int *p){
+
+for(int i=2;i<=10000;i++){
+    p[i]=1;
+}
+
+for(int i=2;i<=10000;i+=2){
+    p[i]=0;
+}
+ 
+ for(int i=3;i<1000000;i+2){
+     if(p[i]){
+         for(int j=i*i;j<=100000;j+=i){
+             p[j]=0;
+         }
+     }
+ }  
+ 
+ p[1]=0;
+ p[0]=0;
+ return;
+}
+
+int main() {
+    int p[100];
+    
+    cin>>n;
+    for(int i=0;i>n;i++){
+        cin>>p[i];
+    }
+    
+    prime(p);
+}

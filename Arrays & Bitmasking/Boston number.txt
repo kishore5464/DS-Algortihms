@@ -1,0 +1,70 @@
+#include<iostream>
+using namespace std;
+
+void primeFactors(int n)
+{ 
+    int a[100];
+   int j=0;
+    int sum=n;
+    
+	while (n%2 == 0)
+	{
+		a[j]=2;
+		n = n/2;
+		j++;
+	}
+	for (int i = 3; i*i <= n; i = i+2)
+	{
+		while (n%i == 0)
+		{
+			a[j]=i;
+			j++;
+			n = n/i;
+		}
+	}
+	if (n > 2)
+	{
+	    a[j]=n;
+		
+	    
+	}
+    
+    int ab=0;
+    for(int i=0;i<=j;i++)
+    {
+        if(a[i]>9)
+            {while(a[i]>0)
+            {
+             ab+=a[i]%10;
+             a[i]=a[i]/10;
+             //cout<<ab<<endl;
+            }}
+            
+            else
+            { ab+=a[i];
+            // cout<<ab<<endl;
+                
+            }
+    }
+    
+    int check=0;
+    while(sum>0)
+    {
+        check+=sum%10;
+        sum=sum/10;
+    }
+    if(check==ab)
+    {
+        cout<<"1";
+    }
+    else
+        cout<<"0";
+}
+
+int main()
+{
+	int n;
+	cin>>n;
+	primeFactors(n);
+	return 0;
+}

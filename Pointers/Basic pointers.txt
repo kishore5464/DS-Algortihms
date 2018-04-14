@@ -1,0 +1,19 @@
+#include <iostream>
+using namespace std;
+int main() {
+   
+   int i=10;
+   cout<<i<<endl;
+   cout<<&i<<endl;
+   
+   int *p=&i; //p contains address of i or p is pointing to address of i
+   cout<<p<<endl;
+   cout<<*p<<endl;
+   cout<<sizeof(i)<<endl;
+   cout<<sizeof(p)<<endl;
+   
+//   char c='a';
+//   char *p2=&c;
+//   cout<<p2<<endl;
+//   cout<<sizeof(p2)<<endl;
+}
