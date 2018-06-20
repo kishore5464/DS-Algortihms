@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+class Queue{
+    
+    class node{
+        public:
+        int data;
+        node *next;
+        
+        node(int d){
+            data=d;
+            next=NULL;
+        }
+    }
+    
+    node *head,*tail;
+    public:
+    
+    void enqueue(int x){
+        
+    }
+    
+    void dequeue(){
+        
+    }
+    
+    int front(){
+        
+    }
+    
+    bool empty(){
+        
+    }
+    
+    int size(){
+        
+    }
+    
+}
+int main() {
+    cout<<"Hello World!";
+}

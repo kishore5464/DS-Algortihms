@@ -1,0 +1,55 @@
+#include<iostream>
+#include<stack>
+using namespace std;
+
+int evaluation(stack<int>&s,char ch){
+   int a=s.top();
+   s.pop();
+   int b=s.top();
+   s.pop();
+   int c;
+
+   if(ch=='+'){
+       c=a+b;
+   }
+   else if(ch=='-'){
+       c=b-a;
+   }
+   else if(ch=='*'){
+       c=a*b;
+   }
+   else if(ch=='/'){
+       c=b/a;
+   }
+   s.push(c);
+   return c;
+}
+
+void postfix(string expr){
+    stack<int> s;
+    int value=0;
+
+    for(char ch:expr){
+       if(ch!='+'&&ch!='-'&&ch!='*'&&ch!='/'){
+           int digit=ch-'0';
+           s.push(digit);
+       }
+        else{
+            value=evaluation(s,ch);
+        }
+    }
+    cout<<value<<endl;
+}
+
+int main() {
+    int t;
+    cin>>t;
+
+    while(t--){
+      string expr;
+      cin>>expr;
+      postfix(expr);
+    }
+    
+	return 0;
+}

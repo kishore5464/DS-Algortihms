@@ -1,0 +1,90 @@
+#include <iostream>
+using namespace std;
+class Stack{
+private:
+    // we create a node inside stack class because of OOPs feature abstraction or data hiding , user don't know stack is implemented (array or LL)
+    //user only knows that it is implemented O(1) time 
+    // if we create node outside this class then data abstraction rule or OOPs rule is violated
+    class node{         
+       public :
+        int data;
+        node *next;
+        node(int d){
+            data=d;
+            next=NULL;
+        }
+    };
+    
+    //has to be in stack class because they define the properties of stack, not node
+    node *head;
+    int size;
+public:
+ 
+    Stack(){
+        head=NULL;
+        size=0;
+    }
+    
+    void push(int x){
+        
+        node *temp=new node(x);
+        temp->next=head;
+        head=temp;
+        ++size;
+    }
+    
+    void pop(){
+        if(empty()) {
+            return;
+        }
+        
+        node *temp;
+        temp=head;
+        head=head->next;
+        --size;
+        delete temp;
+    } 
+    
+    int top(){      //to check the top element
+        if(empty()){
+            return -1;
+        }
+        
+        int x=head->data;
+        return x;
+    }
+    
+    bool empty(){    //to check whether stack is empty or not
+        return head==NULL;
+    }  
+    
+    int Size(){      //to check size 
+        return size;
+    }
+    
+    ~Stack(){
+        while(head){
+            node *ahead=head->next;
+            delete head;
+            head=ahead;
+        }
+         
+        // while(empty()==false){                 //pop all elements until stack become empty
+        //     pop();
+        // }
+    }
+};
+
+int main(){
+    Stack s;            
+    s.push(2);      
+    s.pop();       //remove 2
+    s.pop();       //do nothing as we return on getting NULL
+    s.pop();       //do nothing as we return on getting NULL
+    s.push(20);
+    s.push(200);
+    cout<<s.top()<<endl;
+    cout<<s.top()<<endl;
+    s.push(12);
+    cout<<s.top()<<endl;
+}
