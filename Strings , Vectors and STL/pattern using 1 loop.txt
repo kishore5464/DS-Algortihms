@@ -1,0 +1,19 @@
+#include<iostream>
+#include<iomanip>
+using namespace std;
+ 
+void generatePattern(int n)
+{
+    // Iterate for n lines
+    for (int i=n ; i>=1 ; i--)
+     //setfill is used to fill the blank spaces left by setw(n)
+        cout <<setfill(' ')<<setw(n)<< string(i,'*') << endl; 
+}
+ 
+// Driver code
+int main()
+{
+    int n = 6;
+    generatePattern(n);
+    return 0;
+}
