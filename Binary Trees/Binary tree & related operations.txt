@@ -1,0 +1,163 @@
+#include <iostream>
+using namespace std;
+class node{
+
+   public:
+    int data;
+    node *left;
+    node *right;
+
+    node(int d){
+        data=d;
+        left=NULL;
+        right=NULL;
+    }
+};
+
+// CONSTRUCTION OF TREE
+node *buildTree(){
+  int data;
+  cin>>data;
+
+  if(data==-1){
+      return NULL;
+  }
+  node *n=new node(data);
+  n->left=buildTree();
+  n->right=buildTree();
+  return n;
+}
+
+// PRINT IN PREORDER
+void printPreorder(node *root){
+    if(root==NULL){
+        return;
+    }
+    cout<<root->data<<" , ";
+    printPreorder(root->left);
+    printPreorder(root->right);
+}
+
+// PRINT IN INORDER
+void printInorder(node *root){
+    if(root==NULL){
+        return;
+    }
+    printInorder(root->left);
+    cout<<root->data<<" , ";
+    printInorder(root->right);
+}
+
+// PRINT IN POSTORDER
+void printPostorder(node *root){
+    if(root==NULL){
+        return;
+    }
+    printPostorder(root->left);
+    printPostorder(root->right);
+    cout<<root->data<<" , ";
+}
+
+// PRINT GIVEN LEVEL
+void printLevel(node *root,int level){
+    if(root==NULL || level<0){
+        return;
+    }
+    if(level==0){
+        cout<<root->data<<",";
+        return;
+    }
+
+    printLevel(root->left,level-1);
+    printLevel(root->right,level-1);
+}
+
+// COUNT TOTAL NODES
+int countNodes(node *root){
+    if(root==NULL){
+        return 0;
+    }
+    int ans = 1+ countNodes(root->left) + countNodes(root->right);
+    return ans;
+}
+
+//HEIGHT OF TREE
+int height(node *root){
+    if(root==0){
+        return 0;
+    }
+
+    int lh=height(root->left);
+    int rh=height(root->right);
+    return max(lh,rh) +1;
+}
+
+// PRINT EACH LEVEL
+void printEachLevel(node *root){
+   int min_level=0;
+   int max_level=height(root);
+
+   for(int depth=min_level;depth<=max_level;depth++){
+       printLevel(root,depth);
+       cout<<endl;
+   }
+}
+
+//print data with sum of nodes + data of node
+int replaceWithSum(node *root){
+    if(root==NULL){
+        return 0;
+    }
+
+    int leftsum=replaceWithSum(root->left);
+    int rightsum=replaceWithSum(root->right);
+    root->data = root->data + leftsum + rightsum;
+    return root->data;
+}
+
+//Replace with child sum
+int replacewithchildsum(node *root){
+    if(root==NULL){
+        return 0;
+    }
+    if(root->left==NULL && root->right==NULL){
+        return root->data;
+    }
+
+    int leftsum=replacewithchildsum(root->left);
+    int rightsum=replacewithchildsum(root->right);
+    int temp=root->data;
+    root->data = leftsum + rightsum;
+    return root->data + temp;
+}
+// MAIN
+int main() {
+    node *root=NULL;
+    root=buildTree();
+	
+    printPreorder(root);
+	
+    cout<<endl<<"Print Level "<<endl;
+    printLevel(root,2);
+	
+    cout<<endl<<"total count of nodes : "<<countNodes(root);
+    cout<<endl<<"Height of tree : "<<height(root);
+	
+    cout<<endl<<"Print each level :"<<endl;
+    printEachLevel(root);
+	
+    cout<<endl<<"INORDER"<<endl;
+    printInorder(root);
+	
+    cout<<endl<<"POStORDER"<<endl;
+    printPostorder(root);
+	
+    //cout<<endl<<"ReplaceWithSum"<<endl;
+    //replaceWithSum(root);
+    //printEachLevel(root);
+	
+    cout<<endl<<"ReplaceWithChildSum"<<endl;
+    replacewithchildsum(root);
+    printEachLevel(root);
+    return 0;
+}

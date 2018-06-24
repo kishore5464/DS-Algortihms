@@ -1,0 +1,62 @@
+#include <iostream>
+#include<queue>
+using namespace std;
+class node{
+
+   public:
+    int data;
+    node *left;
+    node *right;
+
+    node(int d){
+        data=d;
+        left=NULL;
+        right=NULL;
+    }
+};
+
+void levelOrderInput(node *&root){
+  //cout<<"Enter root node : ";
+  int data;
+  cin>>data;
+  root = new node(data);
+  
+  queue<node*>q;
+  q.push(root);
+
+  while(!q.empty()){
+      node *parent=q.front();
+      q.pop();
+      
+      int c1,c2;
+
+    //  cout<<"Enter children of "<<parent->data;
+      cin>>c1>>c2;
+
+      if(c1!=-1){                                   //create a node in left of parent with data c1
+          parent->left=new node(c1);
+          q.push(parent->left);
+      }
+      if(c2!=-1){                                  //create a node in right of parent with data c2
+          parent->right=new node(c2);
+          q.push(parent->right); 
+      }
+  }
+}
+
+void printPreorder(node *root){
+    if(root==NULL){
+        return;
+    }
+
+    cout<<root->data<<" , ";
+    printPreorder(root->left);
+    printPreorder(root->right);
+}
+
+int main() {
+   node *root=NULL;
+   levelOrderInput(root);
+   printPreorder(root);
+   return 0;
+}
