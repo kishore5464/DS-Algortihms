@@ -1,0 +1,136 @@
+#include <bits/stdc++.h>
+using namespace std;
+class node{
+
+   public:
+    int data;
+    node *left;
+    node *right;
+
+    node(int d){
+        data=d;
+        left=NULL;
+        right=NULL;
+    }
+};
+
+//BUILDS BINARY SEARCH TREE
+node *insertInBST(node *root,int data){
+    if(root==NULL){
+        root=new node(data);
+        return root;
+    }
+
+    if(data>root->data){
+        root->right=insertInBST(root->right,data);
+    }
+    else{
+        root->left=insertInBST(root->left,data);
+    }
+    return root;
+}
+void buildTree(node *&root){
+  int data;
+  cin>>data;
+  while(data!=-1){
+      root=insertInBST(root,data);
+      cin>>data;
+  }
+}
+
+// PRINT LEVEL ORDER
+void levelOrderPrint(node *root){
+    queue<node *> q;
+    q.push(root);
+    q.push(NULL);
+        
+    while(!q.empty()){
+        node *f=q.front();
+
+        if(f==NULL){
+         q.pop();
+         cout<<endl;
+          if(!q.empty()){
+              q.push(NULL);
+          }
+        }
+        else{
+          q.pop();
+          cout<<f->data<<" ";
+ 
+          if(f->left){
+            q.push(f->left);
+          }
+
+          if(f->right){
+            q.push(f->right);
+          }
+        }
+    }
+}
+
+//DELETION IN BST
+node *minNode(node *root){
+  while(root->left!=NULL){
+      root=root->left;
+  }
+  return root;
+}
+
+
+node* Delete(node *&root,int key){
+    if(root==NULL){
+        return NULL;
+    }
+
+    if(root->data==key){
+        // zero child
+        if(root->left==NULL && root->right==NULL){
+            delete root;
+            return NULL;        //delete value and place NULL at that place
+        }
+
+        //Single Child
+         if(root->left==NULL && root->right!=NULL){
+            node *temp=root->right;
+            delete root;
+            return temp;
+         }
+         if(root->left!=NULL && root->right==NULL){
+             node *temp=root->left;
+             delete root;
+             return temp;
+         }
+
+         //two child
+         node *replacement=minNode(root->right);      //find min node on right
+         root->data=replacement->data;                //copy min data to root data
+         root->right= Delete(root->right,replacement->data);       //call on right subtree to delete the node with min value that was copied
+         return root;
+    }
+    else if(root->data>key){
+        root->left=Delete(root->left,key);           // we do this because we have to attack subtree to the left of root so first we attack then return root 
+        return root;                                  // and not directly returning using return Delete(....)
+    }
+    else{
+        root->right=Delete(root->right,key);
+        return root;
+    }
+}
+int main() {
+    
+    node *root=NULL;
+    buildTree(root);
+    cout<<"Level order print before deletion\n";
+    levelOrderPrint(root);
+
+    int key;
+    cin>>key;
+    Delete(root,key);
+    cout<<"\nLevel order print after deletion\n";
+    levelOrderPrint(root);
+    return 0;
+}
+
+
+

@@ -1,0 +1,116 @@
+#include <bits/stdc++.h>
+using namespace std;
+class node{
+
+   public:
+    int data;
+    node *left;
+    node *right;
+
+    node(int d){
+        data=d;
+        left=NULL;
+        right=NULL;
+    }
+};
+
+//BUILDS BINARY SEARCH TREE
+node *insertInBST(node *root,int data){
+    if(root==NULL){
+        root=new node(data);
+        return root;
+    }
+
+    if(data>root->data){
+        root->right=insertInBST(root->right,data);
+    }
+    else{
+        root->left=insertInBST(root->left,data);
+    }
+    return root;
+}
+void buildTree(node *&root){
+  int data;
+  cin>>data;
+  while(data!=-1){
+      root=insertInBST(root,data);
+      cin>>data;
+  }
+}
+
+// PRINT IN PREORDER
+void printPreorder(node *root){
+    if(root==NULL){
+        return;
+    }
+
+    cout<<root->data<<" , ";
+    printPreorder(root->left);
+    printPreorder(root->right);
+}
+// PRINT IN INORDER
+void printInorder(node *root){
+    if(root==NULL){
+        return;
+    }
+    printInorder(root->left);
+    cout<<root->data<<" , ";
+    printInorder(root->right);
+}
+
+// PRINT IN POSTORDER
+void printPostorder(node *root){
+    if(root==NULL){
+        return;
+    }
+    printPostorder(root->left);
+    printPostorder(root->right);
+    cout<<root->data<<" , ";
+}
+
+// PRINT LEVEL ORDER
+void levelOrderPrint(node *root){
+    queue<node *> q;
+    q.push(root);
+    q.push(NULL);
+        
+    while(!q.empty()){
+        node *f=q.front();
+
+        if(f==NULL){
+         q.pop();
+         cout<<endl;
+          if(!q.empty()){
+              q.push(NULL);
+          }
+        }
+        else{
+          q.pop();
+          cout<<f->data<<" ";
+ 
+          if(f->left){
+            q.push(f->left);
+          }
+
+          if(f->right){
+            q.push(f->right);
+          }
+        }
+    }
+}
+int main() {
+    
+    node *root=NULL;
+    buildTree(root);
+    cout<<"Print Level Order \n";
+    levelOrderPrint(root);
+    cout<<"Print Preorder\n";
+    printPreorder(root);
+    cout<<"\n Print Inorder\n";
+    printInorder(root);
+    cout<<"\n Print Postorder\n";
+    printPostorder(root);
+    return 0;
+}
+
+
