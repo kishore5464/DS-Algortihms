@@ -1,0 +1,38 @@
+#include <iostream>
+#include<cstring>
+using namespace std;
+int main() {
+    
+    char a[]="abbaccdexbyz";
+    int n=strlen(a);
+    int current_length=1;
+    int max_length=1;
+    int visited[256];
+
+    for(int i=0;i<256;i++){
+        visited[i]=-1;
+    }
+
+    visited[a[0]]=0;
+    for(int i=0;i<n;i++){
+        int last_occ=visited[a[i]];
+
+        //expansion
+        if(last_occ==-1 || i-current_length>last_occ){
+            current_length+=1;
+        }
+        //expansion + contraction
+        else{
+            if(current_length>max_length){
+                max_length=current_length;
+            }
+            current_length=i-last_occ;
+        }
+        visited[a[i]]=i;
+    }
+    if(current_length>max_length){
+      max_length=current_length;
+    }
+    cout<<max_length;
+    return 0;
+}

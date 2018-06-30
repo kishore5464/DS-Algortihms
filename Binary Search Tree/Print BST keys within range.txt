@@ -1,0 +1,79 @@
+#include<iostream>
+#include<vector>
+#include <algorithm>
+using namespace std;
+class node{
+   public:
+     int data;
+     node *left;
+     node *right;
+     node(int d){
+         data=d;
+         left=NULL;
+         right=NULL;
+     }
+};
+
+node *InsertInBST(node *root,int key){
+    if(root==NULL){
+        root=new node(key);
+        return root;
+    }
+    
+    if(root->data>key){
+        root->left=InsertInBST(root->left,key);
+    }
+    else{
+        root->right=InsertInBST(root->right,key);
+    }
+    return root;
+}
+
+void buildtree(node *&root,int *a,int n){
+  for(int i=0;i<n;i++){
+      root=InsertInBST(root,a[i]);
+  }
+}
+
+void printPreorder(node *root,vector<int> &v){
+    if(root==NULL){
+        return;
+    }
+    cout<<root->data<<" ";
+    v.push_back(root->data);
+    printPreorder(root->left,v);
+    printPreorder(root->right,v);
+}
+
+void range(vector<int> &v,int r1,int r2){
+    sort(v.begin(),v.end());
+
+    for(int i=0;i<v.size();i++){
+        if(v[i]>=r1 && v[i]<=r2){
+            cout<<v[i]<<" ";
+        }
+    }
+}
+int main(){
+    int t;
+    cin>>t;
+    
+   for(int i=0;i<t;i++){
+    node *root=NULL;
+    vector<int> v;
+    int n1,r1,r2;
+    cin>>n1;
+    int a[n1];
+    for(int i=0;i<n1;i++){
+        cin>>a[i];
+    }
+    cin>>r1>>r2;
+    buildtree(root,a,n1);
+    cout<<"Preorder : ";
+    printPreorder(root,v);
+    cout<<"\nNodes within range are : ";
+    range(v,r1,r2);
+   }
+    return 0;
+}
+
