@@ -1,0 +1,58 @@
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <functional> //header file for a comparator which is greater<int>
+using namespace std;
+
+//custom class with () overloaded
+class myCompare{
+    public :
+     bool operator ()(int a,int b){
+        // cout<<"\nIn my compare";
+         //cout<<"\nThe number is "<<a;
+         return a<b; //for maxheap
+         
+     }
+};
+
+int main() {
+    int a[]={1,4,3,2,6,0,10,12};
+    int n=sizeof(a)/sizeof(a[0]);
+
+    //MAXHEAP
+    priority_queue<int> pqmax;
+    for(int i=0;i<n;i++){
+        pqmax.push(a[i]);
+    }
+    cout<<"Maxheap \n";
+    while(!pqmax.empty()){
+        cout<<pqmax.top()<<" ";
+        pqmax.pop();
+    }
+
+    //MINHEAP 
+    //to build minheap, we need a comparator
+    //it needs vector internally
+    priority_queue<int,vector<int>,greater<int>> pqmin;  //we have to provide them as it is
+     for(int i=0;i<n;i++){
+        pqmin.push(a[i]);
+    }
+    cout<<"\nMinheap \n";
+    while(!pqmin.empty()){
+        cout<<pqmin.top()<<" ";
+        pqmin.pop();
+    }
+
+   // myCompare cmp;     //cmp is an object
+   // cmp(5);            //here it behaves as a function
+
+    priority_queue<int,vector<int>,myCompare> pq;
+     for(int i=0;i<n;i++){
+        pq.push(a[i]);
+    }
+    cout<<"\nFunctor \n";
+    while(!pq.empty()){
+        cout<<pq.top()<<" ";
+        pq.pop();
+    }
+}

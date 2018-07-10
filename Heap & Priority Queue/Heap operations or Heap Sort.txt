@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+// #include <algorithm>
+using namespace std;
+class Minheap{
+    public:
+     vector<int> v;
+
+     Minheap(){
+         v.push_back(-1);
+     }
+
+     void push(int data){
+       v.push_back(data);
+       int index=v.size()-1;
+       int parent=index/2;
+
+       while(index>1 && v[index]<v[parent]){
+           swap(v[index],v[parent]);
+           index=parent;
+           parent=parent/2;
+       }
+     }
+
+     int getMin(){
+         return v[1];
+     }
+
+     bool isEmpty(){
+         return v.size()==1;
+     }
+     
+     void heapify(int i){
+          int leftchild=2*i;
+          int rightchild=leftchild+1;
+          
+          int minIndex=i;
+          if(leftchild<v.size() && v[leftchild]<v[i]){
+              minIndex=leftchild;
+          }
+          if(rightchild<v.size() && v[rightchild]<v[minIndex]){
+              minIndex=rightchild;
+          }
+          if(minIndex!=i){
+              swap(v[i],v[minIndex]);
+              heapify(minIndex);
+          }
+     }
+
+     void pop(){
+    //swap 1st and last element and then delete last element
+       int last=v.size()-1;
+       swap(v[1],v[last]);
+       v.pop_back();
+       heapify(1);
+     }
+};
+int main() {
+    int a[]={1,4,3,2,6,0,10,12};
+    int n=sizeof(a)/sizeof(a[0]);
+
+    Minheap h;
+    for(int i=0;i<n;i++){
+        h.push(a[i]);
+    }
+
+    while(!h.isEmpty()){
+        cout<<h.getMin()<<" ";
+        h.pop();
+    }
+}

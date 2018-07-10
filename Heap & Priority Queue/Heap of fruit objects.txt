@@ -1,0 +1,44 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+class Fruit{
+    public:
+     string name;
+     int price;
+
+     Fruit(string n,int p){
+         name=n;
+         price=p;
+     }
+};
+
+class myCompare{
+    public:
+     bool operator()(Fruit a,Fruit b){
+         //if price is equal then sort lexiographically
+         //minheap based upon price and then name
+         if(a.price==b.price){
+             return a.name>b.name;
+         }
+         return a.price>b.price;
+     }
+};
+int main() {
+    
+    //Heap of fruit objects 1) name 2) price
+    Fruit f1("Mango",180);
+    Fruit f2("Apple",180);
+    Fruit f3("Guave",150);
+
+    priority_queue<Fruit,vector<Fruit>,myCompare> pq;
+    pq.push(f1);
+    pq.push(f2);
+    pq.push(f3);
+
+    while(!pq.empty()){
+        Fruit f=pq.top();
+        pq.pop();
+        cout<<f.name<<endl;
+        cout<<f.price<<endl<<endl;
+    }
+}
