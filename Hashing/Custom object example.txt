@@ -1,0 +1,47 @@
+#include <iostream>
+#include <unordered_map>
+using namespace std;
+class Fruit{
+   
+   public:
+    string name;
+    int price;
+    string city;
+
+    Fruit(){}                              //an object is created first implicity (same as one we create a garbage object)
+    Fruit(string n,int p,string c){        //after that this constructor is called
+        name=n;
+        price=p;
+        city=c;
+    }
+};
+
+int main() {
+    unordered_map<string,Fruit> mymap;
+
+    Fruit f("Mango",100,"Delhi");
+    mymap[f.name]=f;
+    
+    Fruit fs=mymap["Mango"];
+    cout<<fs.city<<endl;
+    cout<<fs.price<<endl;
+
+    //count function - 0(dont exist) or 1(exist)
+    cout<<"Apple "<<mymap.count("Apple")<<endl;
+    cout<<"Mango "<<mymap.count("Mango")<<endl;
+ 
+    //deletion
+    mymap.erase("Mango");
+    
+    // search
+    string fruit;
+    cin>>fruit;
+    if(mymap.count(fruit)!=0){
+       cout<<"Price is "<<mymap[fruit].price<<endl;
+    } 
+    else{
+        cout<<"Fruit doesn't exist";
+    }
+
+    
+}

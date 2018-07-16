@@ -1,0 +1,111 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+template<typename T>
+class node{
+    public:
+     string key;
+     T value;
+     node<T> *next;
+
+     node(string k,T v){
+         key=k;
+         value=v;
+     }
+};
+
+template<typename T>
+class Hashtable{
+    int cs;
+    int ts;
+    node<T> **buckets;
+
+    int hashfunc(string key){
+        int L=key.length();
+        int ans=0;
+        int p=1;                     //because 37^0 = 1
+
+        for(int i=0;i<L;i++){
+            ans=ans+key[L-i-1]*p;
+            p=p*37;
+            p=p%ts;                  //this is done to reduce the size of p
+            ans=ans%ts;              //this is done to reduce the size of ans
+          }
+          return ans;
+    }
+
+    public:
+    Hashtable(int ds=7){
+       cs=0;
+       ts=ds;
+       buckets=new node<T> *[ts];
+
+       for(int i=0;i<ts;i++){
+           buckets[i]=NULL;
+       }
+    }
+
+    void insert(string key,T value){
+          int i = hashfunc(key);
+
+          //insertion at beginning
+          node<T> *n=new node<T>(key,value);
+          n->next=buckets[i];
+          buckets[i]=n;
+    }
+
+    void print(){
+        for(int i=0;i<ts;i++){
+            node<T> *temp=buckets[i];
+            cout<<"Bucket "<<i<<" -> ";
+            while(temp!=NULL){
+                cout<<temp->key<<","<<temp->value<<" || ";
+                temp=temp->next;
+            }
+            cout<<endl;
+        }
+    }
+
+    T* search(string key){                 //T* is because we want a node if found (address of node) else NULL
+        int i=hashfunc(key);
+        node<T> *temp=buckets[i];
+        while(temp!=NULL){
+            if(temp->key==key){
+                return &(temp->value);      //as we are returning node , we have to return its address & in main, we will get value of this address by dereferencing (*)
+            }
+            temp=temp->next;
+        }
+        return NULL;
+    }
+
+    T *erase(string key){
+        int i=hashfunc(key);
+        node<T> *temp=buckets[i];
+        while(temp!=NULL){
+            if(temp->next->key==key){
+                
+            }
+        }
+    }
+};
+int main() {
+    Hashtable<int> h(11);
+    h.insert("Mango",100);
+    h.insert("Apple",170);
+    h.insert("Guava",140);
+    h.insert("Banana",130);
+    h.insert("Chiku",120);
+
+    h.print();
+
+    string f;
+    cin>>f;
+    int *price = h.search(f);
+    if(price==NULL){
+        cout<<"Not found !!";
+    }
+    else{
+        cout<<"Price is : "<<*price<<endl;
+    }
+    return 0;
+}

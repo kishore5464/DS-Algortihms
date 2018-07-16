@@ -1,0 +1,27 @@
+#include <iostream>
+#include <unordered_map>
+using namespace std;
+int main() {
+    unordered_map<string,int> mymap;
+
+    // 3 ways to insert 
+    mymap["Apple"]=100;
+    mymap.insert(make_pair("Guava",120));
+    pair<string,int> p("Mango",140);
+    mymap.insert(p);
+
+   // print using for-each loop
+    for(auto node:mymap){                                 //by iterating over each node
+        cout<<node.first<<" "<<node.second<<endl;
+    }
+
+    //iterate over buckets
+    for(int i=0;i<mymap.bucket_count();i++){
+      cout<<"Bucket "<<i<<" -> ";
+      //iterate over every linked list ith
+      for(auto j=mymap.begin(i);j!=mymap.end(i);j++){               //j is pointer to a pair
+          cout<<j->first<<" "<<j->second<<" || ";
+      }
+      cout<<endl;
+    }
+}

@@ -1,0 +1,70 @@
+#include <iostream>
+#include <vector>
+#include <cstring>
+using namespace std;
+class node{
+
+   public:
+    string data;
+    node *left;
+    node *right;
+
+    node(string d){
+        data=d;
+        left=NULL;
+        right=NULL;
+    }
+};
+
+node *buildTree(){
+  string data;
+  cin>>data;
+
+  if(data=="false"){
+      return NULL;
+  }
+  if(data=="true"){
+      cin>>data;
+  }
+
+  node *n=new node(data);
+  n->left=buildTree();
+  n->right=buildTree();
+  return n;
+}
+
+void print(vector<string> v,int maxvalue){
+    int sum=0;
+   for(int i=0;i<v.size();i++){
+      sum=sum+stoi(v[i]);
+   }
+   if(sum==maxvalue){
+     for(int i=0;i<v.size();i++){
+      cout<<v[i]<<" ";
+     }  
+   }
+}
+
+void printPreorder(node *root,vector<string> v,int maxvalue){
+    if(root==NULL){
+        return;
+    }   
+    v.push_back(root->data);
+    if(root->left==NULL && root->right==NULL){
+        print(v,maxvalue);
+        cout<<endl;
+        return;
+    }
+    printPreorder(root->left,v,maxvalue);
+    printPreorder(root->right,v,maxvalue);
+}
+int main() {
+    node *root=NULL;
+    vector<string> v;
+    root=buildTree();
+    int maxvalue;
+    cin>>maxvalue;
+    printPreorder(root,v,maxvalue);
+    return 0;
+}
+

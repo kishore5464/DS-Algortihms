@@ -1,0 +1,60 @@
+#include <iostream>
+#include <map>
+#include <vector>
+using namespace std;
+class node{
+
+   public:
+    int data;
+    node *left;
+    node *right;
+
+    node(int d){
+        data=d;
+        left=NULL;
+        right=NULL;
+    }
+};
+
+node *buildTree(){
+  int data;
+  cin>>data;
+
+  if(data==-1){
+      return NULL;
+  }
+
+  node *n=new node(data);
+  n->left=buildTree();
+  n->right=buildTree();
+  return n;
+}
+
+void verticalorderprint(node *root,map<int,vector<int>> &m,int d=0){
+    if(root==NULL){
+        return;
+    }
+
+    m[d].push_back(root->data);
+    verticalorderprint(root->left,m,d-1);
+    verticalorderprint(root->right,m,d+1);
+}
+int main() {
+    
+    node *root=NULL;
+    root=buildTree();
+
+    map<int,vector<int>>m;
+    verticalorderprint(root,m);
+
+    for(auto it=m.begin();it!=m.end();it++){
+        cout<<it->first<<"->";                        //gives key
+        //vector 
+        for(int j=0;j<it->second.size();j++){         //gives vector
+            cout<<it->second[j]<<" ";                 //iterating over vector's each value
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+

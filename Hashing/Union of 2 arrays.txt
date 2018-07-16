@@ -1,0 +1,25 @@
+#include <iostream>
+#include <unordered_map>
+using namespace std;
+int main() {
+    unordered_map<int,int> umap;
+    int n,m;
+
+    cin>>n;
+    int a[n];
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        umap[a[i]]=a[i];
+    }
+
+    cin>>m;
+    int b[m];
+    for(int i=0;i<m;i++){
+        cin>>b[i];
+         umap[b[i]]=b[i];
+    }
+    
+   for(auto node:umap){
+       cout<<node.first<<" ";
+   }
+}
