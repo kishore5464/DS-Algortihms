@@ -1,0 +1,58 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+//memoization
+int memo[100];
+int maxProfit(int *priceofEachLen,int totallen){
+       if(totallen==0)  return 0;
+       
+       if(memo[totallen]!=-1){
+          return memo[totallen];
+       }
+
+       int best;
+       for(int len=1;len<=totallen;len++){
+           int netprofit = priceofEachLen[len] + maxProfit(priceofEachLen,totallen-len);
+           best = max(netprofit,best);
+       }
+
+       memo[totallen]=best;
+       return best;
+}
+
+//bottom-up approach
+int maxProfitDp(int *priceofEachLen,int totallen){
+   int dp[100]={};
+
+   for(int len=1;len<=totallen;len++){
+       int best = 0;
+       for(int cut=1;cut<=len;cut++){
+           best = max(best,priceofEachLen[cut] + dp[len-cut]);
+       }
+       dp[len] = best;
+   }
+   return dp[totallen];
+}
+
+int main() {
+    int totallen;
+    cin>>totallen;
+    int priceofEachLen[totallen];
+
+     for(int eachpiece=1;eachpiece<=totallen;eachpiece++){
+         cin>>priceofEachLen[eachpiece];
+     }
+
+     //memoization
+     cout<<"Memoization\n";
+     fill(memo,memo+totallen+1,-1);
+     int ans = maxProfit(priceofEachLen,totallen);
+     cout<<ans<<endl;
+
+     //bottom-up
+     cout<<"\nBottom Up\n";
+     int result = maxProfitDp(priceofEachLen,totallen);
+     cout<<result;
+     return 0;
+}
