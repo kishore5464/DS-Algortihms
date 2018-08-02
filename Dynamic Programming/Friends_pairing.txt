@@ -1,0 +1,26 @@
+#include <iostream>
+#define ll long long int
+using namespace std;
+ll memo[100];
+ll friends_pairing(ll n){
+    if(n==0 || n==1){
+        return 1;
+    }
+    
+    if(memo[n]!=0) return memo[n];
+
+    memo[n] = friends_pairing(n-1) + (n-1)*friends_pairing(n-2);
+    return memo[n];
+}
+int main() {
+    ll t;
+    cin>>t;
+
+    while(t--){
+      ll n;
+      cin>>n;
+      fill(memo,memo+n,0);
+      cout<<friends_pairing(n)<<endl;
+    }
+    return 0;
+}

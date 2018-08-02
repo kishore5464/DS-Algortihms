@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+
+//memoization
+int memo[100];
+int ladder(int n,int k){
+    if(n==0){
+        return 1;
+    }
+    if(n<0){
+        return 0;
+    }
+
+    if(memo[n]!=-1) return memo[n];
+
+    //memo[n] = ladder(n-1) + ladder(n-2) + ladder(n-3);
+    int ans=0;
+    for(int j=1;j<=k;j++){
+      ans = ans + ladder(n-j,k);
+    }
+    memo[n]=ans;
+    return memo[n];
+}
+
+//bottom-up
+int ladderdp(int n,int k){
+    int *dp = new int[n];
+
+    dp[0]=1;
+    
+    for(int i=1;i<=n;i++){
+        dp[i] = 0;
+        for(int j=1;j<=k;j++){
+            if((i-j)>=0){
+               dp[i] = dp[i] + dp[i-j];
+            } 
+        }
+    }
+    return dp[n];
+}
+int main() {
+    int n,k;
+    cin>>n>>k;
+    
+    //memoization
+    fill(memo,memo+n+1,-1);
+    cout<<ladder(n,k);
+    cout<<endl;
+
+    //bottom-up
+    cout<<ladderdp(n,k);
+}

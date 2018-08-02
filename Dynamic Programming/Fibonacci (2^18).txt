@@ -1,0 +1,28 @@
+#include <iostream>
+#include <map>
+#define ll long long
+using namespace std;
+const long M = 1000000007;
+map<ll,ll> F;
+
+ll f(int n){
+     if(F.count(n))  return F[n];
+
+     long k = n/2;
+     if(n%2==0){       //n=2*k
+         return F[n] = (f(k)*f(k) + f(k-1)*f(k-1)) % M;
+     }
+     else{            //n=2*k+1
+         return F[n] = (f(k)*f(k+1) + f(k-1)*f(k)) % M;
+     }
+
+}
+
+int main() {
+     ll n;
+     cin>>n;
+     F[0] = 1;
+     F[1] = 1;
+
+     cout<<(n==0?0:f(n-1))<<endl;
+}

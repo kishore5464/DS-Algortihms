@@ -1,0 +1,27 @@
+#include <iostream>
+using namespace std;
+int a[100];
+int optimal_game_strategy(int i,int j){
+    if(i==j){
+        return 0;
+    }
+    if(j==i+1){
+        return max(a[i],a[j]);
+    }
+    int ans=0;
+    int player1 = min(optimal_game_strategy(i+2,j),optimal_game_strategy(i+1,j-1));
+    int player2 = min(optimal_game_strategy(i,j-2),optimal_game_strategy(i+1,j-1));
+    ans = max(a[i] + player1 ,a[j] + player2);
+    cout<<ans<<" ";
+    return ans;
+}
+
+int main() {
+    int n;
+    cin>>n;
+
+    for(int i=0;i<n;i++){
+        cin>>a[n];
+    }
+    cout<<optimal_game_strategy(0,n-1);
+}

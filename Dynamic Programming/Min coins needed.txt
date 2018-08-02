@@ -1,0 +1,58 @@
+#include <iostream>
+#include <climits>
+using namespace std;
+int coinsNeeded(int *coins,int n,int amount){
+
+    if(amount==0){
+        return 0;
+    }
+    int ans = INT_MAX;
+    for(int i=0;i<n;i++){
+       if((amount-coins[i])>=0){
+           int small = coinsNeeded(coins,n,amount-coins[i]);
+           if(small!=INT_MAX){
+               ans = min(ans,small+1);
+           }
+       }
+    }
+    return ans;
+}
+
+int coinsNeededDp(int *coins,int n,int amount){
+      int *dp = new int[amount+1];
+      for(int i=0;i<=amount;i++){
+          dp[i] = INT_MAX;
+      }
+      dp[0] = 0;
+
+      for(int rupay=1;rupay<=amount;rupay++){
+          for(int i=0;i<n;i++){
+              if(coins[i]<=rupay){
+                  int small = dp[rupay-coins[i]];
+                  if(small!=INT_MAX){
+                      dp[rupay] = min(dp[rupay],small+1);
+                      
+                  }
+              }
+          }
+          cout<<rupay<<" -> "<<dp[rupay]<<endl;
+      }
+      return dp[amount];
+}
+
+int main() {
+    int us_coins[] = {1,7,10};
+    int n = 3;
+    int amount = 22;
+
+    int ind_coins[] = {1,2,5,10,20};
+    int i = 5;
+    int money = 13; 
+
+    //memoization
+    cout<<coinsNeeded(us_coins,n,amount)<<endl;
+    cout<<coinsNeeded(ind_coins,i,money)<<endl;
+
+    //bottom-up
+    cout<<coinsNeededDp(ind_coins,i,39);
+}

@@ -1,0 +1,40 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+int memo[100][100];
+int coin_change(int n,int *coins,int k){
+    //we have found the change
+    if(n==0){
+        return 1;
+    }
+    //no change
+    if(n<0){
+        return 0;
+    }
+    //if there is no denomination left for change
+    if(k==0){
+        return 0;
+    }
+
+    if(memo[n][k]!=-1) return memo[n][k];
+
+    int opt1 = coin_change(n-coins[0],coins,k);
+    int opt2 = coin_change(n,coins+1,k-1);
+    memo[n][k] = opt1 + opt2;
+    return memo[n][k];
+}
+int main() {
+    int value,k;
+   
+    memset(memo,-1,sizeof(memo));
+
+    cin>>value>>k;
+    
+    int coins[k];
+    for(int i=0;i<k;i++){
+        coins[i] = i+1;
+    }
+
+    cout<<coin_change(value,coins,k);
+    return 0;
+}
