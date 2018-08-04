@@ -1,8 +1,10 @@
 #include <iostream>
 #include <cstring>
+#define ll long long
+#define MOD 1000000007
 using namespace std;
-int memo[100][100];
-int coin_change(int n,int *coins,int k){
+
+ll coin_change(ll n,ll *coins,ll k,ll memo[][1000]){
     //we have found the change
     if(n==0){
         return 1;
@@ -18,23 +20,64 @@ int coin_change(int n,int *coins,int k){
 
     if(memo[n][k]!=-1) return memo[n][k];
 
-    int opt1 = coin_change(n-coins[0],coins,k);
-    int opt2 = coin_change(n,coins+1,k-1);
-    memo[n][k] = opt1 + opt2;
+    ll opt1 = coin_change(n-coins[0],coins,k,memo)%MOD;
+    ll opt2 = coin_change(n,coins+1,k-1,memo)%MOD;
+    memo[n][k] = (opt1 + opt2);
     return memo[n][k];
 }
+
+ll coin_change2(ll n,ll *coins,ll k){
+     ll dp[n+1][k];
+     
+     // Fill the enteries for 0 value case (n = 0)
+     for (ll i=0; i<k; i++)
+        dp[0][i] = 1;
+
+     for(ll i=1;i<=n;i++){
+       for(ll j=0;j<k;j++){
+            // ll x = (i-coins[j] >= 0)? dp[i - coins[j]][j]: 0;
+ 
+            // ll y = (j >= 1)? dp[i][j-1]: 0;
+            ll x,y;
+           if(i-coins[j]>=0){
+              x = dp[i-coins[j]][j];
+           }
+           else{
+               x=0;
+           }
+           if(j>=1){
+               y = dp[i][j-1];
+           }
+           else{
+               y=0;
+           }
+           dp[i][j] = x + y;
+       }
+     }
+  
+     return dp[n][k-1];
+}
+
 int main() {
-    int value,k;
-   
-    memset(memo,-1,sizeof(memo));
-
-    cin>>value>>k;
-    
-    int coins[k];
-    for(int i=0;i<k;i++){
-        coins[i] = i+1;
+    ll t;
+    cin>>t;
+    while(t--){
+      ll value,k;
+      cin>>k;
+      
+      ll *coins = new ll[k];
+      for(ll i=0;i<k;i++){
+          cin>>coins[i];
+      }
+      cin>>value;
+      cout<<"MEMOIZATION\n";
+     ll memo[value+1][1000];
+      memset(memo,-1,sizeof(memo));
+      cout<<coin_change(value,coins,k,memo)<<endl;
+      cout<<"BOTTOM UP\n";
+      cout<<coin_change2(value,coins,k)<<endl;
+      delete [] coins;
+      coins=NULL;
     }
-
-    cout<<coin_change(value,coins,k);
     return 0;
 }
