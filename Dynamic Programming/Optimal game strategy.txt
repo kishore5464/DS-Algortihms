@@ -8,11 +8,11 @@ int  opt_game(int i,int j){
     if(j==i+1){
         return max(a[i],a[j]);
     }
+    
     int ans=0;
     ans = max(a[i] + min(opt_game(i+2,j),opt_game(i+1,j-1)),
               a[j] + min(opt_game(i,j-2),opt_game(i+1,j-1)));
     
-    cout<<ans<<" ";
     return ans;
 }
 
@@ -25,4 +25,3 @@ int main() {
     }
     cout<<opt_game(0,n-1);
 }
-

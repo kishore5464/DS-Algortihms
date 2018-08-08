@@ -1,0 +1,35 @@
+#include<iostream>
+#include<algorithm>
+#define ll long long
+using namespace std;
+int main(){
+ 
+    ll w,h,t;
+    cin>>w>>h>>t;
+    
+    ll *x=new ll[t];
+    ll *y=new ll[t];
+    
+    for(ll i=0;i<t;i++){
+        cin>>x[i]>>y[i];
+    }
+    
+    sort(x,x+t);
+    sort(y,y+t);
+  
+    ll delx=x[0]-1;
+    for(ll i=1;i<t;i++){
+        delx = max(delx,x[i]-x[i-1]-1);
+    }
+    delx = max(delx,w-x[t-1]-1);
+    
+    ll dely=y[0]-1;
+    for(ll i=1;i<t;i++){
+        dely = max(dely,y[i]-y[i-1]-1);
+    }
+    dely = max(dely,h-y[t-1]-1);
+    
+    cout<<(delx*dely)<<endl;
+    
+    return 0;
+}

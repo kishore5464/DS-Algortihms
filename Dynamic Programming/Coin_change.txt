@@ -51,7 +51,7 @@ ll coin_change2(ll n,ll *coins,ll k){
            else{
                y=0;
            }
-           dp[i][j] = x + y;
+           dp[i][j] = (x + y)%MOD;
        }
      }
   

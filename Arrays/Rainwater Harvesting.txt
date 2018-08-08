@@ -1,0 +1,39 @@
+#include <iostream>
+#define ll long long 
+using namespace std;
+int main() {
+
+  ll n;
+  cin>>n;
+  ll *arr = new ll[n];
+  ll *left = new ll[n];
+  ll *right = new ll[n];
+
+  for(ll i=0;i<n;i++){
+      cin>>arr[i];
+  }
+
+  left[0] = arr[0];
+  for(int i=1;i<n;i++){
+      if(arr[i]>left[i-1])
+        left[i] = arr[i];
+      else
+        left[i] = left[i-1];
+  }
+
+  right[n-1] = arr[n-1];
+  for(int i=n-2;i>=0;i--){
+      if(arr[i]>right[i+1])
+        right[i] = arr[i];
+      else
+        right[i] = right[i+1];
+  }
+  
+  ll minimum,count=0;
+  for(ll i=0;i<n;i++){
+      minimum = min(left[i],right[i]);
+      count += minimum-arr[i];
+  }
+  cout<<count<<endl;
+  
+} 

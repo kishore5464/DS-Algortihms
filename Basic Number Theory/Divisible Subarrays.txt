@@ -1,40 +1,30 @@
 #include <iostream>
-#include<cstring>
+#include <map>
+#define ll long long
 using namespace std;
-#define ll long long int
 int main() {
-    
-    int t;
+    ll t;
     cin>>t;
-    
-    int a[1000005],prefixSum[1000005];
+
     while(t--){
-        int n;
-        cin>>n;
-        
-        ll sum=0;
-        memset(prefixSum,0,sizeof prefixSum); //creating frequency array with name prefixSum
-        
-        prefixSum[0]=1;
-        
-        for(int i=0;i<n;i++){
-            cin>>a[i];
-            
-            sum+=a[i];
-            sum%=n;
-            
-            sum=(sum+n)%n;      //make number position then module them like if sum=-3 then (-3+5)=2 && 2%5=2
-            
-            //increase the frequency of each number after module
-            prefixSum[sum]++;           
-        }
-        
-        ll ans=0;
-        for(int i=0;i<n;i++){
-            ll num =prefixSum[i];
-            ans+=((num)*(num-1))/2;        //method to find nC2;
-        }
-        cout<<ans;
+     ll n,sum=0;
+     cin>>n;
+     ll *a = new ll[n];
+     map<ll,ll> m;
+     
+     m[0]++;
+     for(ll i=0;i<n;i++){
+         cin>>a[i];
+         sum += a[i];
+         sum %= n;
+         sum = (sum+n)%n;    //make number position then module them like if sum=-3 then (-3+5)=2 && 2%5=2
+         m[sum]++;           //increase the frequency of each number after module
+     }
+      
+     ll ans = 0;
+     for(auto node:m){
+         ans += ((node.second)*(node.second-1))/2;   //method to find nC2;
+     }
+     cout<<ans<<endl;
     }
-    return 0;
 }
