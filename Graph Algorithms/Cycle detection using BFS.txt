@@ -1,0 +1,60 @@
+#include <iostream>
+#include <map>
+#include <queue>
+#include <list>
+using namespace std;
+template <typename T>
+class Graph{
+  map<T,list<T> > adjList;
+  public:
+  Graph() {}
+
+  void addEdge(T u, T v, bool bidirec=true){
+       adjList[u].push_back(v);
+       if(bidirec){
+           adjList[v].push_back(u); 
+       }
+  }
+
+  bool isCyclic(T src){
+      map <T,bool> visited;
+      map <T,int> parent;
+      queue <T> q;
+
+      visited[src] = true;
+      parent[src] = src;
+      q.push(src);
+
+      while(!q.empty()){
+          T node = q.front();
+          q.pop();
+
+          for(auto neighbour: adjList[node]){
+              if(visited[neighbour]==true && parent[node]!=neighbour){
+                  return true;
+              }
+              else if(!visited[neighbour]){
+                  visited[neighbour] = true;
+                  parent[neighbour] = node;
+                  q.push(neighbour);
+              }
+          }
+      }
+      return false;
+  }
+};
+int main() {
+    Graph<int> g;
+    g.addEdge(1,2);
+    g.addEdge(1,3);
+    g.addEdge(2,4);
+    g.addEdge(3,4);
+
+    if(g.isCyclic(1)){
+        cout<<"Graph is cyclic";
+    }
+    else{
+        cout<<"Graph is non-cyclic";
+    }
+    return 0;
+}
