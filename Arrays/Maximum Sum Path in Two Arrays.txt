@@ -1,0 +1,42 @@
+#include <iostream>
+#include <map>
+using namespace std;
+int main() {
+
+    int a1[] = {2,3,7,10,12};
+    int a2[] = {1,5,7,8};
+    int n1 = 5, n2 = 4;
+   
+    int sum1 = 0, sum2 = 0, result = 0;
+
+    int i=0, j =0;
+    while(i<n1 && j<n2){
+       if(a1[i]<a2[j]){
+         sum1  = sum1 + a1[i++];
+       }
+       else if(a1[i]>a2[j]){
+           sum2 = sum2 + a2[j++];
+       }
+       else {
+           result = result + max(sum1,sum2);
+           sum1 = 0, sum2 = 0;
+
+           while(i<n1 && j<n2 && a1[i]==a2[j]){
+               result = result + a1[i++];
+               j++;
+           }
+       }
+    }
+
+    while(i<n1){
+        sum1 = sum1 + a1[i++];
+    }
+
+    while(j<n2){
+        sum2 = sum2 + a2[j++];
+    }
+
+    result = result + max(sum1,sum2);
+    cout<<result;
+    return 0;
+}

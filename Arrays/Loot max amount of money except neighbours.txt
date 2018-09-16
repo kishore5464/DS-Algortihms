@@ -1,0 +1,42 @@
+//find max amount of money that theif can loot 
+//condition : he cannot loot from neighbouring house
+#include <iostream>
+using namespace std;
+int maximum(int *a, int n){
+    if(n<=0){
+      return 0;
+    }
+    
+    int q1 = a[n] + maximum(a,n-2);
+    int q2 = a[n-1] + maximum(a,n-3);
+    return max(q1,q2);
+}
+
+int maximumdp(int *a,int n){
+   int dp[100];
+   
+   if(n==0){
+       return 0;
+   }
+   
+   dp[0] = a[0];
+   dp[1] = max(a[0],a[1]);
+   
+   for(int i=2;i<n;i++){
+       int q1=0, q2=0;
+       q1 = a[i] + dp[i-2];
+       q2 = dp[i-1];
+       dp[i] = max(q1,q2);
+   }
+   return dp[n-1];
+}
+
+int main() {
+    int a[] = {10,7,12,44,30,25};
+   //int a[] = {7,14,48,12,30,25};
+   int n = 6;
+   
+   cout<<maximum(a,n-1)<<endl;
+   cout<<maximumdp(a,n)<<endl;
+}
+

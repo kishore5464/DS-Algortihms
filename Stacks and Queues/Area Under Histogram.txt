@@ -1,0 +1,41 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+void histogramarea(long int *a,long int n){
+    stack<int> s;
+    long int maxarea=0,area,temp=0,i=0;
+   
+    while(i<n){
+        if(s.empty()||a[i]>a[s.top()]){
+            s.push(i++);
+        }
+        else{
+                   temp=s.top();
+                   s.pop();
+                   if(s.empty()){
+                       area=a[temp]*i;
+                   }
+                   else{
+                       area=a[temp]*(i-s.top()-1);
+                   }
+                   if(area>maxarea){
+                       maxarea=area;
+                   }
+               }
+        }
+ 
+        cout<<maxarea<<endl;
+}
+int main() {
+    long int n;
+    cin>>n;
+   long int a[1000000];
+    for(long int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    histogramarea(a,n);
+    return 0;
+}
+
+
+       

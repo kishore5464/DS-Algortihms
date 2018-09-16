@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+bool mycompare(pair<int,int> p1, pair<int,int> p2){
+    int d1 = (p1.second)/(p1.first);
+    int d2 = (p2.second)/(p2.first);
+    return d1>d2;
+}
+void fractional_knapsack( int max_capacity, vector<pair<int,int> > v){
+    sort(v.begin(),v.end(),mycompare);
+
+    // for(int i=0; i<v.size(); i++){
+    //     cout<<v[i].first<<" "<<v[i].second<<endl;
+    // }
+    
+    int currentweight = 0;
+    int currentprice = 0;
+     for(int i=0; i<v.size(); i++){
+        if( currentweight + v[i].first <= max_capacity ){
+            currentweight = currentweight + v[i].first;
+            currentprice = currentprice + v[i].second;
+        }
+        else{
+            int remain = max_capacity - currentweight;
+            currentweight = currentweight + remain;
+            currentprice = currentprice + (v[i].second * ((double)remain/(double)v[i].first));
+        }
+    }
+     cout<<currentprice;
+}
+
+int main() {
+    int max_capacity,weight,price,n;
+    vector<pair<int,int> > v;
+
+    cin>>n>>max_capacity;
+    
+    for(int i=0;i<n;i++){
+        cin>>weight>>price;
+        v.push_back(make_pair(weight,price));
+    }
+
+    fractional_knapsack(max_capacity, v);
+    return 0;
+}

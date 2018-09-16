@@ -1,0 +1,71 @@
+#include <iostream>
+#include <list>
+#include <map>
+using namespace std;
+
+template<typename T>
+class Graph{
+    //int V;
+    //list<int> *l;
+    map<T,list<T> > adjlist;
+    public:
+    //   Graph(int v){
+    //       V = v;
+    //       l = new list<int>[V];
+    //   }
+    Graph() {}
+
+      void addEdge(int u,int v,bool bidir=true){
+          adjlist[u].push_back(v);
+          if(bidir){
+              adjlist[v].push_back(u);
+          }
+      }
+      
+      void dfshelper(T node, map<T,bool> &visited, int &country_size){
+          visited[node] = true;
+          country_size ++;
+          for(auto neighbour:adjlist[node]){
+              if(!visited[neighbour]){
+                  dfshelper(neighbour,visited,country_size);
+              }
+          }
+      }
+      int dfsmoon(){
+         // bool *visited = new bool[V];
+          map<T, bool> visited;
+        //   for(int i=0;i<V;i++){
+        //       visited[i] = false;
+        //   }
+          
+        // int n = V;
+         // int total_ways = (n*(n-1))/2;
+         // for(int i=0;i<V;i++){
+          int n=0;
+          for(auto i: adjlist){
+              n++;
+          }
+
+          int total_ways = (n*(n-1))/2;
+          for(auto i:adjlist){
+              T node = i.first;
+              if(!visited[node]){
+                  int country_size = 0;
+                  dfshelper(node,visited,country_size);
+                  cout<<"country size : "<<country_size<<endl;
+                 total_ways -= (country_size *(country_size-1))/2;
+              }
+          }
+          return total_ways;
+      }
+};
+
+int main() {
+    Graph<int> g;
+    g.addEdge(0,1);
+    g.addEdge(2,3);
+    g.addEdge(0,4);
+    int n = g.dfsmoon();
+    cout<<"Total ways : "<<n;
+    return 0;
+}

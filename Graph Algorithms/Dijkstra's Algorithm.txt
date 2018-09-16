@@ -1,0 +1,95 @@
+#include <iostream>
+#include <map>
+#include <set>
+#include <list>
+#include <climits>
+using namespace std;
+
+template<typename T>
+class Graph{
+    map<T,list<pair<T,int> > > m;
+    public:
+      Graph(){}
+
+      void addEdge(T u, T v, int dist, bool bidir=true){
+          m[u].push_back(make_pair(v,dist));
+          if(bidir){
+              m[v].push_back(make_pair(u,dist));
+          }
+      }
+
+      void printList(){
+          for(auto i: m){
+              cout<<i.first<<" -> ";
+              for(auto l: i.second){
+                  cout<<"( "<<l.first<<", "<<l.second<<" ) ";
+              }
+              cout<<endl;
+          }
+      }
+
+      void dijkstra(T src){
+          map<T,int> dist;     //node with some actual distance
+
+          //set all distances to infinity
+          for(auto i:m){
+              dist[i.first] = INT_MAX;
+          }
+
+          //make a set to find out the node with minimum distance
+          set<pair<int, T> > s;  // shortest distance with node & with keep distance first because we want to sort accprding to distance
+          dist[src] = 0;
+          s.insert(make_pair(0,src));
+
+          while(!s.empty()){
+              //find the pair at the front
+              auto p = *(s.begin());    //gives us the pair
+              T node = p.second;        //node from this pair
+              int nodedist = p.first;   //distance of node for pair
+              s.erase(s.begin());
+              
+              //iterate over the neighbour/children of the current parent
+              for(auto childpair: m[node]){
+                  if(nodedist + childpair.second < dist[childpair.first]){
+                      //in the set , updation of a particular is not possible
+                      //we have to remove the old pair, and insert the new pair to simulate updation
+                      T dest = childpair.first;
+                      auto f = s.find(make_pair(dist[dest],dest));
+                      if(f!=s.end()){
+                          s.erase(f);
+                      }
+
+                      //insert the new pair
+                      dist[dest] = nodedist + childpair.second;
+                      s.insert(make_pair(dist[dest],dest));
+                  }
+              }
+          }
+
+          //print distance of all other nodes from src
+          cout<<endl;
+          for(auto d: dist){
+              cout<<d.first<<" is located at a distance of "<<d.second<<" from source"<<endl;;
+          }
+      }
+};
+
+int main() {
+    // Graph<int> g;
+    // g.addEdge(1,2,1);
+    // g.addEdge(1,3,4);
+    // g.addEdge(2,3,1);
+    // g.addEdge(3,4,2);
+    // g.addEdge(1,4,7);
+    Graph<string> g;
+    g.addEdge("Amritsar","Delhi",1);
+    g.addEdge("Amritsar","Jaipur",4);
+    g.addEdge("Jaipur","Delhi",2);
+    g.addEdge("Jaipur","Mumbai",8);
+    g.addEdge("Bhopal","Agra",2);
+    g.addEdge("Mumbai","Bhopal",3);
+    g.addEdge("Agra","Delhi",1);
+    g.printList();
+    g.dijkstra("Amritsar");
+    return 0;
+}

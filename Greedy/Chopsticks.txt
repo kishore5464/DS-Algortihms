@@ -1,0 +1,24 @@
+#include <iostream>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+int main() {
+    int no_of_sticks, max_allowed_diff;
+    cin>>no_of_sticks>>max_allowed_diff;
+
+    int *a = new int[no_of_sticks];
+
+    for(int i=0;i<no_of_sticks;i++){
+        cin>>a[i];
+    }
+    sort(a,a+no_of_sticks);
+    
+    int count = 0;
+    for(int i=0;i<no_of_sticks;i++){
+        if(abs(a[i]-a[i+1])<=max_allowed_diff){
+            count++;
+            i++;
+        }
+    }
+   cout<<count;
+}
